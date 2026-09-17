@@ -1,8 +1,20 @@
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+
 export default function App() {
   return (
-    <main>
-      <h1>Real-Time Load Balancing</h1>
-      <p>React frontend is running.</p>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

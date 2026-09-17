@@ -1,6 +1,56 @@
 from flask import Flask
+from pymongo import MongoClient
 
+from config import Config
+from extensions import cors, jwt
+from .models.user_model import create_user_indexes
+from .routes.auth_routes import auth_bp
 
 def create_app():
     app = Flask(__name__)
+    app.config.from_object(Config)
+
+    secret = app.config.get("JWT_SECRET_KEY")
+    if not secret or len(secret) < 32:
+        raise RuntimeError(
+            "Set JWT_SECRET_KEY to a random secret of at least 32 characters."
+        )
+
+    jwt.init_app(app)
+
+    cors.init_app(
+        app,
+        resources={
+            r"/api/*": {
+                "origins": [app.config["FRONTEND_ORIGIN"]]
+            }
+        },
+    )
+
+    mongo_client = MongoClient(
+        app.config["MONGO_URI"],
+        serverSelectionTimeoutMS=5000,
+        tz_aware=True,
+    )
+
+    try:
+        mongo_client.admin.command("ping")
+    except Exception:
+        mongo_client.close()
+        raise
+
+    app.extensions["mongo_client"] = mongo_client
+    app.extensions["mongo_db"] = mongo_client[
+        app.config["MONGO_DB_NAME"]
+    ]
+
+    app.logger.setLevel("INFO")
+    app.logger.info("MongoDB connection verified.")
+
+    with app.app_context():
+        create_user_indexes()
+
+    app.logger.info("User email index verified.")
+    app.register_blueprint(auth_bp)
+
     return app
