@@ -9,6 +9,7 @@ import { useAuth } from "./context/AuthContext.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Tasks from "./pages/Tasks.jsx";
+import VirtualMachines from "./pages/VirtualMachines.jsx";
 
 function RequireAuth({ children }) {
   const { user, accessToken } = useAuth();
@@ -22,6 +23,7 @@ function RequireAuth({ children }) {
 
 function HomeRedirect() {
   const { user, accessToken } = useAuth();
+
   return (
     <Navigate
       to={user && accessToken ? "/tasks" : "/login"}
@@ -37,6 +39,7 @@ export default function App() {
         <Route path="/" element={<HomeRedirect />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
         <Route
           path="/tasks"
           element={
@@ -45,6 +48,16 @@ export default function App() {
             </RequireAuth>
           }
         />
+
+        <Route
+          path="/vms"
+          element={
+            <RequireAuth>
+              <VirtualMachines />
+            </RequireAuth>
+          }
+        />
+
         <Route path="*" element={<HomeRedirect />} />
       </Routes>
     </BrowserRouter>

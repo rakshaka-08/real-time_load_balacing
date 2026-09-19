@@ -8,6 +8,7 @@ import {
   listTasks,
   updateTask,
 } from "../services/taskService.js";
+import { Link } from "react-router-dom";
 
 const EMPTY_TASK = {
   name: "",
@@ -229,6 +230,10 @@ export default function Tasks() {
     <main>
       <header>
         <h1>Task Management</h1>
+        <nav aria-label="Management pages">
+     <Link to="/tasks" aria-current="page">Tasks</Link>{" "}
+     <Link to="/vms">Virtual Machines</Link>
+     </nav>
         <p>Signed in as {user.email}</p>
         <button type="button" onClick={logout} disabled={busy}>
           Sign out
