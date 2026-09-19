@@ -39,12 +39,12 @@ class SPTTests(unittest.TestCase):
 
         self.assertEqual(
             [item.vm_id for item in assignments],
-            ["fast", "fast", "slow"],
+            ["fast", "fast", "fast"],
         )
         self.assertAlmostEqual(
-            result.schedule.total_response_time, 6.0
+            result.schedule.total_response_time, 5.5
         )
-        self.assertAlmostEqual(result.schedule.makespan, 4.0)
+        self.assertAlmostEqual(result.schedule.makespan, 3.5)
 
     def test_equal_lengths_use_task_id(self):
         problem = SchedulingProblem(

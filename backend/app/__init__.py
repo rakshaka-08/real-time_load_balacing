@@ -9,6 +9,8 @@ from .models.task_model import create_task_indexes
 from .routes.task_routes import task_bp
 from .models.vm_model import create_vm_indexes
 from .routes.vm_routes import vm_bp
+from .models.simulation_model import create_simulation_indexes
+from .routes.simulation_routes import simulation_bp
 
 def create_app():
     app = Flask(__name__)
@@ -55,11 +57,12 @@ def create_app():
         create_user_indexes()
         create_task_indexes()
         create_vm_indexes()
+        create_simulation_indexes()
         app.logger.info("Task index verified.")
 
     app.logger.info("User email index verified.")
     app.register_blueprint(auth_bp)
     app.register_blueprint(task_bp)
     app.register_blueprint(vm_bp)
-
+    app.register_blueprint(simulation_bp)
     return app
