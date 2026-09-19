@@ -32,6 +32,9 @@ export default function Login() {
       <main>
         <h1>Signed in</h1>
         <p>{user.email}</p>
+        <p>
+        <Link to="/tasks">Open Task Management</Link>
+        </p>
         <button type="button" onClick={logout}>
           Sign out
         </button>

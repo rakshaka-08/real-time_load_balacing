@@ -5,6 +5,8 @@ from config import Config
 from extensions import cors, jwt
 from .models.user_model import create_user_indexes
 from .routes.auth_routes import auth_bp
+from .models.task_model import create_task_indexes
+from .routes.task_routes import task_bp
 
 def create_app():
     app = Flask(__name__)
@@ -49,8 +51,11 @@ def create_app():
 
     with app.app_context():
         create_user_indexes()
+        create_task_indexes()
+        app.logger.info("Task index verified.")
 
     app.logger.info("User email index verified.")
     app.register_blueprint(auth_bp)
+    app.register_blueprint(task_bp)
 
     return app

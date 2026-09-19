@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { loginUser } from "../services/authService.js";
 
 const AuthContext = createContext(null);
@@ -16,10 +16,10 @@ export function AuthProvider({ children }) {
     return result.user;
   }
 
-  function logout() {
+    const logout = useCallback(() => {
     setAccessToken(null);
     setUser(null);
-  }
+  }, []);
 
   return (
     <AuthContext.Provider
