@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import { useAuth } from "./context/AuthContext.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Tasks from "./pages/Tasks.jsx";
@@ -26,7 +27,7 @@ function HomeRedirect() {
 
   return (
     <Navigate
-      to={user && accessToken ? "/tasks" : "/login"}
+      to={user && accessToken ? "/dashboard" : "/login"}
       replace
     />
   );
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/" element={<HomeRedirect />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
 
         <Route
           path="/tasks"
