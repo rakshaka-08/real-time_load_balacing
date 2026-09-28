@@ -231,7 +231,8 @@ export default function Tasks() {
       <header>
         <h1>Task Management</h1>
         <nav aria-label="Management pages">
-     <Link to="/tasks" aria-current="page">Tasks</Link>{" "}
+     <Link to="/dashboard">Dashboard</Link>{" "}
+          <Link to="/tasks" aria-current="page">Tasks</Link>{" "}
      <Link to="/vms">Virtual Machines</Link>
      </nav>
         <p>Signed in as {user.email}</p>

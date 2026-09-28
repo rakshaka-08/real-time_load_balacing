@@ -190,6 +190,7 @@ export default function VirtualMachines() {
         <p>Signed in as {user.email}</p>
 
         <nav aria-label="Management pages">
+          <Link to="/dashboard">Dashboard</Link>{" "}
           <Link to="/tasks">Tasks</Link>{" "}
           <Link to="/vms" aria-current="page">Virtual Machines</Link>
         </nav>
