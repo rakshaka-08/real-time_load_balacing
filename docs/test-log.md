@@ -48,3 +48,17 @@
 - Confirmed timeline slider, Play, Pause, and Reset controls update simulated time.
 - Confirmed task states change between waiting, running, and completed.
 - Confirmed VM cards show active task, queue count, and completed-task count.
+
+## Module 16 — Reusable simulation scenario templates
+
+**Date:** 2026-09-29
+
+### Automated validation
+- Frontend production build: passed with `npm run build`.
+- Backend unit tests: passed with `python -m unittest discover -s tests -p "test_*.py"`.
+
+### Manual validation
+- Confirmed a simulation setup can be saved as a named template.
+- Confirmed saved templates load tasks, VMs, algorithm, parameters, seed, and redistribution preference.
+- Confirmed templates can be renamed and deleted.
+- Confirmed templates are visible only to their owner.
