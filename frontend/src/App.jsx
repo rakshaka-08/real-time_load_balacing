@@ -11,6 +11,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Tasks from "./pages/Tasks.jsx";
 import VirtualMachines from "./pages/VirtualMachines.jsx";
+import Analytics from "./pages/Analytics";
 
 function RequireAuth({ children }) {
   const { user, accessToken } = useAuth();
@@ -41,7 +42,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
-
+        <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
         <Route
           path="/tasks"
           element={
