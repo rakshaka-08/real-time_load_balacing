@@ -1,0 +1,262 @@
+.replay-page {
+    min-height: 100vh;
+    color: #edf3ff;
+    background: #080d1d;
+  }
+  
+  .replay-top {
+    min-height: 92px;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    border-bottom: 1px solid #2b3955;
+    background: #121a32;
+  }
+  
+  .replay-brand {
+    color: #8bf1c0;
+    font-size: 1.65rem;
+    font-weight: 900;
+    text-decoration: none;
+  }
+  
+  .replay-brand span {
+    display: block;
+    color: #9eb8df;
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
+  }
+  
+  .replay-top nav {
+    display: flex;
+    flex: 1;
+    gap: 20px;
+  }
+  
+  .replay-top nav a {
+    color: #a9b9d6;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  
+  .replay-top nav a:hover,
+  .replay-top nav a[aria-current="page"] {
+    color: #8bf1c0;
+  }
+  
+  .replay-top button,
+  .replay-heading button,
+  .replay-controls button {
+    padding: 11px 16px;
+    border: 1px solid #496082;
+    border-radius: 10px;
+    color: #edf3ff;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+  }
+  
+  .replay-main {
+    width: min(1180px, 90%);
+    margin: 0 auto;
+    padding: 72px 0;
+  }
+  
+  .replay-eyebrow {
+    margin: 0 0 12px;
+    color: #82eabb;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+  }
+  
+  .replay-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 34px;
+  }
+  
+  .replay-heading h1 {
+    margin: 0;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+  }
+  
+  .replay-heading p,
+  .replay-message {
+    color: #a9b9d6;
+    line-height: 1.6;
+  }
+  
+  .replay-picker,
+  .replay-panel,
+  .replay-empty {
+    padding: 24px;
+    border: 1px solid #2b3955;
+    border-radius: 15px;
+    background: #121a32;
+  }
+  
+  .replay-picker {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 22px;
+    font-weight: 800;
+  }
+  
+  .replay-picker select {
+    padding: 14px;
+    border: 1px solid #3b4d70;
+    border-radius: 10px;
+    color: #edf3ff;
+    background: #151f38;
+    font: inherit;
+  }
+  
+  .replay-layout {
+    display: grid;
+    gap: 22px;
+  }
+  
+  .replay-slider {
+    width: 100%;
+    margin: 20px 0;
+    accent-color: #74d8aa;
+  }
+  
+  .replay-controls {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .replay-primary {
+    border-color: transparent !important;
+    color: #082117 !important;
+    background: #74d8aa !important;
+    font-weight: 800;
+  }
+  
+  .replay-counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .replay-counts span,
+  .replay-badge {
+    padding: 6px 9px;
+    border-radius: 7px;
+    background: #1f2d49;
+    font-weight: 800;
+    font-size: 0.82rem;
+  }
+  
+  .replay-badge.running {
+    color: #162813;
+    background: #d5ef8a;
+  }
+  
+  .replay-badge.completed {
+    color: #183424;
+    background: #b7f5d2;
+  }
+  
+  .replay-badge.waiting {
+    color: #30250e;
+    background: #ffd57a;
+  }
+  
+  .replay-table-scroll {
+    overflow-x: auto;
+  }
+  
+  .replay-table-scroll table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .replay-table-scroll th,
+  .replay-table-scroll td {
+    padding: 14px;
+    border-bottom: 1px solid #2b3955;
+    text-align: left;
+  }
+  
+  .replay-machines {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  
+  .replay-machines article {
+    padding: 18px;
+    border: 1px solid #2b3955;
+    border-radius: 12px;
+    background: #151f38;
+  }
+  
+  .replay-machines h3 {
+    margin-top: 0;
+  }
+  
+  .replay-machines p {
+    color: #9eb8df;
+  }
+  
+  .replay-machines dl {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 11px;
+  }
+  
+  .replay-machines dt {
+    color: #9eb8df;
+  }
+  
+  .replay-machines dd {
+    margin: 0;
+    text-align: right;
+  }
+  
+  .replay-empty {
+    max-width: 650px;
+  }
+  
+  .replay-empty a {
+    display: inline-block;
+    padding: 12px 16px;
+    border-radius: 9px;
+    color: #082117;
+    background: #74d8aa;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  
+  .replay-error {
+    color: #ffaaaa;
+    font-weight: 700;
+  }
+  
+  @media (max-width: 800px) {
+    .replay-top {
+      padding: 18px 5%;
+      flex-wrap: wrap;
+    }
+  
+    .replay-top nav {
+      order: 3;
+      width: 100%;
+      overflow-x: auto;
+    }
+  
+    .replay-heading {
+      display: grid;
+    }
+  
+    .replay-machines {
+      grid-template-columns: 1fr;
+    }
+  }
