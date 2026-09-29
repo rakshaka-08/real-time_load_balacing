@@ -9,8 +9,17 @@ def get_templates_collection():
 
 
 def create_template_indexes():
-    get_templates_collection().create_index(
+    collection = get_templates_collection()
+
+    collection.create_index(
         [("owner_id", ASCENDING), ("created_at", DESCENDING)]
+    )
+
+    collection.create_index(
+        [
+            ("collaborators.user_id", ASCENDING),
+            ("created_at", DESCENDING),
+        ]
     )
 
 
