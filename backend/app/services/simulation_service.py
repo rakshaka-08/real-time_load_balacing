@@ -21,6 +21,7 @@ from ..models.simulation_model import (
     save_simulation_command,
 )
 from ..simulation.simulation_engine import SimulationEngine
+from ..algorithms.hybrid_ga_hba import HybridGAHBAAlgorithm
 
 
 class SimulationServiceError(Exception):
@@ -32,6 +33,7 @@ class SimulationServiceError(Exception):
 ALGORITHMS = {
     "GA": GeneticAlgorithm,
     "HBA": HoneyBeeAlgorithm,
+    "GA_HBA": HybridGAHBAAlgorithm,
     "LPT": LPTAlgorithm,
     "SPT": SPTAlgorithm,
 }
@@ -48,6 +50,21 @@ PARAMETERS = {
     "HBA": {
         "scout_bees",
         "iterations",
+        "selected_sites",
+        "elite_sites",
+        "elite_recruits",
+        "other_recruits",
+        "neighborhood_moves",
+    },
+        "GA_HBA": {
+        "population_size",
+        "generations",
+        "crossover_rate",
+        "mutation_rate",
+        "tournament_size",
+        "elite_count",
+        "scout_bees",
+        "hba_iterations",
         "selected_sites",
         "elite_sites",
         "elite_recruits",
@@ -211,7 +228,7 @@ def create_simulation_for_user(owner_id, data):
 
     algorithm_name = data.get("algorithm")
     if not isinstance(algorithm_name, str) or algorithm_name not in ALGORITHMS:
-        raise SimulationServiceError("Choose GA, HBA, LPT, or SPT.")
+        raise SimulationServiceError("Choose GA, HBA, GA_HBA, LPT, or SPT.")
 
     parameters = data.get("parameters", {})
     if not isinstance(parameters, dict):
@@ -231,7 +248,11 @@ def create_simulation_for_user(owner_id, data):
     # Bound search settings accepted through the web API.
     for key, value in parameters.items():
         if key not in {"crossover_rate", "mutation_rate"}:
-            maximum = 1000 if key in {"generations", "iterations"} else 200
+            maximum = (
+              1000
+              if key in {"generations", "iterations", "hba_iterations"}
+              else 200
+        )
             positive_integer(value, key, maximum)
 
     owned_inputs = load_owned_inputs(owner_id, task_ids, vm_ids)
