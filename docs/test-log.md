@@ -1,5 +1,5 @@
 
-### Module 10 — 2026-09-23
+### Module 10 ï¿½ 2026-09-23
 
 - Backend: 92 tests passed.
 - Frontend socket hook syntax check: passed.
@@ -20,3 +20,17 @@
 - Test data used a separate database: codex_module11_preview_20260928.
 - Creation form uses LPT; algorithm configuration is reserved for Module 12.
 - GitHub Actions: pending Module 11 pull request.
+
+## Module 14 â€” Simulation result export and reporting
+
+**Date:** 2026-09-29
+
+### Automated validation
+- Frontend production build: passed with `npm run build`.
+- Backend unit tests: passed with `python -m unittest discover -s tests -p "test_*.py"`.
+
+### Manual validation
+- Confirmed completed simulations appear in the Reports page.
+- Confirmed JSON reports download with simulation, VM, and task data.
+- Confirmed CSV task exports download with task execution rows.
+- Confirmed the empty state appears when no completed simulations exist.
