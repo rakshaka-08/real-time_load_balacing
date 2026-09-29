@@ -59,6 +59,27 @@ const ALGORITHMS = {
       ["neighborhood_moves", "Neighborhood moves", 2, 1, 50],
     ],
   },
+  GA_HBA: {
+    name: "Hybrid GA + HBA",
+    short: "GA + HBA",
+    description:
+      "Uses Genetic Algorithm exploration followed by Honey Bee neighborhood refinement.",
+    parameters: [
+      ["population_size", "GA population size", 50, 10, 200],
+      ["generations", "GA generations", 100, 1, 1000],
+      ["crossover_rate", "GA crossover rate", 0.9, 0, 1, 0.05],
+      ["mutation_rate", "GA mutation rate", 0.15, 0, 1, 0.05],
+      ["tournament_size", "GA tournament size", 3, 1, 50],
+      ["elite_count", "GA elite count", 2, 1, 50],
+      ["scout_bees", "HBA scout bees", 30, 2, 200],
+      ["hba_iterations", "HBA iterations", 100, 1, 1000],
+      ["selected_sites", "HBA selected sites", 10, 1, 199],
+      ["elite_sites", "HBA elite sites", 3, 1, 199],
+      ["elite_recruits", "HBA elite recruits", 10, 1, 200],
+      ["other_recruits", "HBA other recruits", 5, 1, 200],
+      ["neighborhood_moves", "Neighborhood moves", 1, 1, 200],
+    ],
+  },
 };
 
 const ACTIONS = {

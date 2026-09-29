@@ -4,7 +4,7 @@ from pymongo.errors import PyMongoError
 from ..models.template_model import get_templates_collection, utc_now
 from ..models.user_model import find_user_by_email
 
-ALGORITHMS = {"LPT", "SPT", "GA", "HBA"}
+ALGORITHMS = {"LPT", "SPT", "GA", "HBA", "GA_HBA"}
 
 
 class TemplateServiceError(Exception):
