@@ -19,6 +19,8 @@ from .services.simulation_runner import SimulationRunner
 
 from .models.template_model import create_template_indexes
 from .routes.template_routes import template_bp
+from .routes.health_routes import health_bp
+
 
 def create_app():
     app = Flask(__name__)
@@ -82,6 +84,7 @@ def create_app():
     app.register_blueprint(vm_bp)
     app.register_blueprint(simulation_bp)
     app.register_blueprint(template_bp)
+    app.register_blueprint(health_bp)
 
     simulation_namespace = SimulationNamespace()
     socketio.on_namespace(simulation_namespace)

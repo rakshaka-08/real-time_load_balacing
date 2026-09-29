@@ -16,6 +16,7 @@ import Reporting from "./pages/Reporting.jsx";
 import Replay from "./pages/Replay.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import SystemStatus from "./pages/SystemStatus.jsx";
 
 function RequireAuth({ children }) {
   const { user, accessToken } = useAuth();
@@ -67,6 +68,14 @@ export default function App() {
             </RequireAuth>
           }
         />
+        <Route
+  path="/status"
+  element={
+    <ProtectedRoute>
+      <SystemStatus />
+    </ProtectedRoute>
+  }
+/>
 
         <Route path="*" element={<HomeRedirect />} />
       </Routes>
