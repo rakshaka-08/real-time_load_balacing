@@ -17,6 +17,8 @@ from .routes.simulation_routes import simulation_bp
 from .sockets.simulation_socket import SimulationNamespace
 from .services.simulation_runner import SimulationRunner
 
+from .models.template_model import create_template_indexes
+from .routes.template_routes import template_bp
 
 def create_app():
     app = Flask(__name__)
@@ -71,6 +73,7 @@ def create_app():
         create_task_indexes()
         create_vm_indexes()
         create_simulation_indexes()
+        create_template_indexes()
 
     app.logger.info("User, task, VM, and simulation indexes verified.")
 
@@ -78,6 +81,7 @@ def create_app():
     app.register_blueprint(task_bp)
     app.register_blueprint(vm_bp)
     app.register_blueprint(simulation_bp)
+    app.register_blueprint(template_bp)
 
     simulation_namespace = SimulationNamespace()
     socketio.on_namespace(simulation_namespace)
