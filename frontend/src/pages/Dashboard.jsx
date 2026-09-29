@@ -882,7 +882,9 @@ export default function Dashboard() {
           <Link to="/analytics">Analytics</Link>
           <Link to="/reports">Reports</Link>
           <Link to="/replay">Replay</Link>
+          <Link to="/status">System status</Link>
           <Link to="/vms">Virtual machines</Link>
+          
         </nav>
 
         <button type="button" onClick={logout}>
