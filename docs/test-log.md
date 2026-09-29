@@ -34,3 +34,17 @@
 - Confirmed JSON reports download with simulation, VM, and task data.
 - Confirmed CSV task exports download with task execution rows.
 - Confirmed the empty state appears when no completed simulations exist.
+
+## Module 15 — Simulation replay and execution timeline
+
+**Date:** 2026-09-29
+
+### Automated validation
+- Frontend production build: passed with `npm run build`.
+- Backend unit tests: passed with `python -m unittest discover -s tests -p "test_*.py"`.
+
+### Manual validation
+- Confirmed completed simulations are available in the Replay page.
+- Confirmed timeline slider, Play, Pause, and Reset controls update simulated time.
+- Confirmed task states change between waiting, running, and completed.
+- Confirmed VM cards show active task, queue count, and completed-task count.
