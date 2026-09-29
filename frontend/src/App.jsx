@@ -14,6 +14,7 @@ import VirtualMachines from "./pages/VirtualMachines.jsx";
 import Analytics from "./pages/Analytics";
 import Reporting from "./pages/Reporting.jsx";
 import Replay from "./pages/Replay.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function RequireAuth({ children }) {
   const { user, accessToken } = useAuth();
