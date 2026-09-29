@@ -92,3 +92,18 @@
 - Confirmed unauthenticated protected routes redirect to Login.
 - Confirmed the requested protected URL is preserved during redirect.
 - Confirmed the error and not-found layouts remain usable on mobile widths.
+
+## Module 19 — System health monitoring and diagnostics
+
+**Date:** 2026-09-29
+
+### Automated validation
+- Frontend production build passed with `npm run build`.
+- Backend unit tests passed with `python -m unittest discover -s tests -p "test_*.py"`.
+
+### Manual validation
+- Confirmed the liveness endpoint reports the API process as UP.
+- Confirmed the readiness endpoint verifies MongoDB availability.
+- Confirmed the System Status page displays API, database, uptime, and check timestamps.
+- Confirmed automatic and manual refresh work.
+- Confirmed unavailable services display a degraded or down state.
