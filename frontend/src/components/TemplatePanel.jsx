@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import {
   createTemplate,
   deleteTemplate,
+  listSharedTemplates,
   listTemplates,
   renameTemplate,
+  revokeTemplateAccess,
+  shareTemplate,
 } from "../services/templateService.js";
 
 import "./template-panel.css";
@@ -16,7 +19,9 @@ export default function TemplatePanel({
   onError,
 }) {
   const [templates, setTemplates] = useState([]);
+  const [sharedTemplates, setSharedTemplates] = useState([]);
   const [name, setName] = useState("");
+  const [shareEmail, setShareEmail] = useState({});
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState("");
 
@@ -24,8 +29,13 @@ export default function TemplatePanel({
     setLoading(true);
 
     try {
-      const result = await listTemplates(token);
-      setTemplates(result.templates || []);
+      const [ownedResult, sharedResult] = await Promise.all([
+        listTemplates(token),
+        listSharedTemplates(token),
+      ]);
+
+      setTemplates(ownedResult.templates || []);
+      setSharedTemplates(sharedResult.templates || []);
     } catch (error) {
       onError(error);
     } finally {
@@ -95,10 +105,57 @@ export default function TemplatePanel({
     }
   }
 
+  async function share(template) {
+    const email = shareEmail[template.id]?.trim();
+
+    if (!email) {
+      onError({
+        response: {
+          data: { error: "Enter a collaborator email address." },
+        },
+      });
+      return;
+    }
+
+    setBusy(template.id);
+
+    try {
+      await shareTemplate(token, template.id, email);
+      setShareEmail((current) => ({
+        ...current,
+        [template.id]: "",
+      }));
+      await refresh();
+    } catch (error) {
+      onError(error);
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function revoke(template, collaborator) {
+    if (!window.confirm(`Remove ${collaborator.email}?`)) return;
+
+    setBusy(template.id);
+
+    try {
+      await revokeTemplateAccess(
+        token,
+        template.id,
+        collaborator.user_id
+      );
+      await refresh();
+    } catch (error) {
+      onError(error);
+    } finally {
+      setBusy("");
+    }
+  }
+
   return (
     <section className="template-panel">
       <h3>Scenario templates</h3>
-      <p>Save this configuration or load a previous scenario.</p>
+      <p>Save a setup, share it, or load a template shared with you.</p>
 
       <div className="template-save">
         <input
@@ -107,7 +164,6 @@ export default function TemplatePanel({
           maxLength="80"
           onChange={(event) => setName(event.target.value)}
         />
-
         <button type="button" onClick={save} disabled={busy === "save"}>
           {busy === "save" ? "Saving…" : "Save current setup"}
         </button>
@@ -115,41 +171,106 @@ export default function TemplatePanel({
 
       {loading ? (
         <p>Loading templates…</p>
-      ) : templates.length ? (
-        <div className="template-list">
-          {templates.map((template) => (
-            <article key={template.id}>
-              <strong>{template.name}</strong>
-              <span>
-                {template.algorithm} · {template.task_ids.length} tasks ·{" "}
-                {template.vm_ids.length} VMs
-              </span>
-
-              <div>
-                <button type="button" onClick={() => onLoad(template)}>
-                  Load
-                </button>
-                <button
-                  type="button"
-                  disabled={busy === template.id}
-                  onClick={() => rename(template)}
-                >
-                  Rename
-                </button>
-                <button
-                  type="button"
-                  className="template-delete"
-                  disabled={busy === template.id}
-                  onClick={() => remove(template)}
-                >
-                  Delete
-                </button>
-              </div>
-            </article>
-          ))}
-        </div>
       ) : (
-        <p>No templates saved yet.</p>
+        <>
+          <h4>My templates</h4>
+
+          {templates.length ? (
+            <div className="template-list">
+              {templates.map((template) => (
+                <article key={template.id}>
+                  <strong>{template.name}</strong>
+                  <span>
+                    {template.algorithm} · {template.task_ids.length} tasks ·{" "}
+                    {template.vm_ids.length} VMs
+                  </span>
+
+                  <div>
+                    <button type="button" onClick={() => onLoad(template)}>
+                      Load
+                    </button>
+                    <button
+                      type="button"
+                      disabled={busy === template.id}
+                      onClick={() => rename(template)}
+                    >
+                      Rename
+                    </button>
+                    <button
+                      type="button"
+                      className="template-delete"
+                      disabled={busy === template.id}
+                      onClick={() => remove(template)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+
+                  <div className="template-sharing">
+                    <input
+                      type="email"
+                      placeholder="Collaborator email"
+                      value={shareEmail[template.id] || ""}
+                      onChange={(event) =>
+                        setShareEmail((current) => ({
+                          ...current,
+                          [template.id]: event.target.value,
+                        }))
+                      }
+                    />
+                    <button
+                      type="button"
+                      disabled={busy === template.id}
+                      onClick={() => share(template)}
+                    >
+                      Share
+                    </button>
+                  </div>
+
+                  {template.collaborators?.length > 0 && (
+                    <ul className="template-collaborators">
+                      {template.collaborators.map((collaborator) => (
+                        <li key={collaborator.user_id}>
+                          {collaborator.email}
+                          <button
+                            type="button"
+                            disabled={busy === template.id}
+                            onClick={() => revoke(template, collaborator)}
+                          >
+                            Remove
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p>No templates saved yet.</p>
+          )}
+
+          <h4>Shared with me</h4>
+
+          {sharedTemplates.length ? (
+            <div className="template-list">
+              {sharedTemplates.map((template) => (
+                <article key={template.id}>
+                  <strong>{template.name}</strong>
+                  <span>
+                    {template.algorithm} · {template.task_ids.length} tasks ·{" "}
+                    {template.vm_ids.length} VMs
+                  </span>
+                  <button type="button" onClick={() => onLoad(template)}>
+                    Load shared template
+                  </button>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p>No templates have been shared with you.</p>
+          )}
+        </>
       )}
     </section>
   );
