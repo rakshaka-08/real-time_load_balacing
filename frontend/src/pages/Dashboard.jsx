@@ -11,6 +11,7 @@ import {
 } from "../services/simulationService.js";
 import { listTasks } from "../services/taskService.js";
 import { listVMs } from "../services/vmService.js";
+import TemplatePanel from "../components/TemplatePanel.jsx";
 
 import "./dashboard.css";
 
@@ -325,6 +326,22 @@ function NewRun({ token, onCreated, onError }) {
   const [redistribution, setRedistribution] = useState(true);
   const [busy, setBusy] = useState(false);
 
+  function loadTemplate(template) {
+    setTasks(template.task_ids);
+    setVMs(template.vm_ids);
+    setAlgorithm(template.algorithm);
+    setParameters(
+      Object.fromEntries(
+        Object.entries(template.parameters || {}).map(([key, value]) => [
+          key,
+          String(value),
+        ])
+      )
+    );
+    setSeed(String(template.seed));
+    setRedistribution(template.redistribution_enabled);
+  }
+
   function validateParameters() {
     for (const [key, label, , minimum, maximum] of ALGORITHMS[
       algorithm
@@ -404,6 +421,24 @@ function NewRun({ token, onCreated, onError }) {
       </p>
 
       <fieldset disabled={busy}>
+      <TemplatePanel
+          token={token}
+          configuration={{
+            task_ids: tasks,
+            vm_ids: vms,
+            algorithm,
+            parameters: Object.fromEntries(
+              Object.entries(parameters).map(([key, value]) => [
+                key,
+                Number(value),
+              ])
+            ),
+            seed: Number(seed),
+            redistribution_enabled: redistribution,
+          }}
+          onLoad={loadTemplate}
+          onError={onError}
+        />
         <AlgorithmPicker
           algorithm={algorithm}
           setAlgorithm={setAlgorithm}
