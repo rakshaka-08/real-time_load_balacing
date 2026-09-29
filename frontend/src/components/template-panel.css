@@ -69,3 +69,38 @@
       display: grid;
     }
   }
+  .template-sharing {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  
+  .template-sharing input {
+    flex: 1;
+    min-width: 180px;
+    padding: 10px;
+    border: 1px solid #3b4d70;
+    border-radius: 8px;
+    color: #edf3ff;
+    background: #0d1428;
+  }
+  
+  .template-collaborators {
+    display: grid;
+    gap: 7px;
+    padding: 0;
+    margin: 4px 0 0;
+    list-style: none;
+  }
+  
+  .template-collaborators li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: #a9b9d6;
+    font-size: 0.9rem;
+  }
+  
+  .template-collaborators button {
+    color: #ffaaaa !important;
+  }

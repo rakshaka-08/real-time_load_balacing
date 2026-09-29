@@ -10,6 +10,9 @@ from ..services.template_service import (
     delete_template_for_user,
     list_templates_for_user,
     rename_template_for_user,
+    list_shared_templates_for_user,
+    revoke_template_access_for_user,
+    share_template_for_user,
 )
 
 template_bp = Blueprint("templates", __name__, url_prefix="/api/templates")
@@ -66,3 +69,33 @@ def rename_template(owner_id, template_id):
 def delete_template(owner_id, template_id):
     delete_template_for_user(owner_id, template_id)
     return "", 204
+@template_bp.get("/shared")
+@authenticated_template_route
+def list_shared_templates(owner_id):
+    return jsonify(list_shared_templates_for_user(owner_id)), 200
+
+
+@template_bp.post("/<template_id>/share")
+@authenticated_template_route
+def share_template(owner_id, template_id):
+    data = json_body()
+
+    template = share_template_for_user(
+        owner_id,
+        template_id,
+        data.get("email"),
+    )
+
+    return jsonify({"template": template}), 200
+
+
+@template_bp.delete("/<template_id>/collaborators/<collaborator_id>")
+@authenticated_template_route
+def revoke_template_access(owner_id, template_id, collaborator_id):
+    revoke_template_access_for_user(
+        owner_id,
+        template_id,
+        collaborator_id,
+    )
+
+    return "", 204    

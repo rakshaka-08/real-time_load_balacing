@@ -62,3 +62,19 @@
 - Confirmed saved templates load tasks, VMs, algorithm, parameters, seed, and redistribution preference.
 - Confirmed templates can be renamed and deleted.
 - Confirmed templates are visible only to their owner.
+
+## Module 17 — Shared scenario templates and collaboration
+
+**Date:** 2026-09-29
+
+### Automated validation
+- Frontend production build passed with `npm run build`.
+- Backend unit tests passed with `python -m unittest discover -s tests -p "test_*.py"`.
+
+### Manual validation
+- Confirmed an owner can share a template with a registered user by email.
+- Confirmed shared templates appear under Shared with me.
+- Confirmed collaborators can load shared templates.
+- Confirmed collaborators cannot rename or delete templates they do not own.
+- Confirmed owners can view collaborators and revoke access.
+- Confirmed revoked templates disappear from the collaborator account.
