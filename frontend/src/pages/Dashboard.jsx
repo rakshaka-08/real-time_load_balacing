@@ -844,6 +844,7 @@ export default function Dashboard() {
           </Link>
 
           <Link to="/tasks">Tasks</Link>
+          <Link to="/analytics">Analytics</Link>
           <Link to="/vms">Virtual machines</Link>
         </nav>
 
