@@ -107,3 +107,29 @@
 - Confirmed the System Status page displays API, database, uptime, and check timestamps.
 - Confirmed automatic and manual refresh work.
 - Confirmed unavailable services display a degraded or down state.
+
+## Module 21 — Hybrid GA + HBA scheduling
+
+**Date:** 2026-09-29
+
+### Automated validation
+- Hybrid algorithm unit tests passed.
+- Complete backend unit test suite passed.
+- Frontend production build passed.
+
+### Manual validation
+- Confirmed GA + HBA appears in the algorithm selector.
+- Confirmed hybrid parameters can be configured.
+- Confirmed a hybrid simulation can be created and completed.
+- Confirmed hybrid runs appear in Analytics, Reports, and Replay.
+
+## Module 22 — Authentication UI and project branding
+
+- Added the “Intelligent Load Balancing Simulator” project heading.
+- Added consistent LoadLab branding to Login and Register.
+- Added responsive desktop and mobile authentication layouts.
+- Added styled loading, error, signed-in, and registration-success states.
+- Preserved the existing authentication services and JWT flow.
+- Verified successful login and registration.
+- Verified invalid login error presentation.
+- Frontend production build passed.
