@@ -44,3 +44,32 @@ export async function deleteTemplate(token, templateId) {
     requestConfig(token)
   );
 }
+export async function listSharedTemplates(token, signal) {
+    const response = await api.get(
+      "/templates/shared",
+      requestConfig(token, signal)
+    );
+  
+    return response.data;
+  }
+  
+  export async function shareTemplate(token, templateId, email) {
+    const response = await api.post(
+      `/templates/${templateId}/share`,
+      { email },
+      requestConfig(token)
+    );
+  
+    return response.data.template;
+  }
+  
+  export async function revokeTemplateAccess(
+    token,
+    templateId,
+    collaboratorId
+  ) {
+    await api.delete(
+      `/templates/${templateId}/collaborators/${collaboratorId}`,
+      requestConfig(token)
+    );
+  }
