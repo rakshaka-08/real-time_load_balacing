@@ -2,6 +2,7 @@ from bson import ObjectId
 from pymongo.errors import PyMongoError
 
 from ..models.template_model import get_templates_collection, utc_now
+from ..models.user_model import find_user_by_email
 
 ALGORITHMS = {"LPT", "SPT", "GA", "HBA"}
 
@@ -23,6 +24,7 @@ def public_template(document):
         "seed": document["seed"],
         "redistribution_enabled": document["redistribution_enabled"],
         "created_at": document["created_at"].isoformat(),
+        "collaborators": document.get("collaborators", []),
         "updated_at": document["updated_at"].isoformat(),
     }
 
@@ -128,4 +130,91 @@ def delete_template_for_user(owner_id, template_id):
     )
 
     if not result.deleted_count:
+        raise TemplateServiceError("Template was not found.", 404)
+def list_shared_templates_for_user(user_id):
+    documents = get_templates_collection().find(
+        {"collaborators.user_id": user_id}
+    ).sort("created_at", -1)
+
+    return {
+        "templates": [
+            {
+                **public_template(document),
+                "is_owner": False,
+                "owner_id": document["owner_id"],
+                "collaborators": document.get("collaborators", []),
+            }
+            for document in documents
+        ]
+    }
+
+
+def share_template_for_user(owner_id, template_id, email):
+    try:
+        object_id = ObjectId(template_id)
+    except Exception as exc:
+        raise TemplateServiceError("Template was not found.", 404) from exc
+
+    document = get_templates_collection().find_one(
+        {"_id": object_id, "owner_id": owner_id}
+    )
+
+    if not document:
+        raise TemplateServiceError("Template was not found.", 404)
+
+    user = find_user_by_email(str(email or "").strip().lower())
+
+    if not user:
+        raise TemplateServiceError("No registered user has this email.", 404)
+
+    collaborator_id = str(user["_id"])
+
+    if collaborator_id == owner_id:
+        raise TemplateServiceError("You already own this template.")
+
+    collaborators = document.get("collaborators", [])
+
+    if any(item["user_id"] == collaborator_id for item in collaborators):
+        raise TemplateServiceError("This user already has access.", 409)
+
+    collaborator = {
+        "user_id": collaborator_id,
+        "email": user["email"],
+    }
+
+    get_templates_collection().update_one(
+        {"_id": object_id, "owner_id": owner_id},
+        {
+            "$push": {"collaborators": collaborator},
+            "$set": {"updated_at": utc_now()},
+        },
+    )
+
+    document["collaborators"] = [*collaborators, collaborator]
+
+    return {
+        **public_template(document),
+        "collaborators": document["collaborators"],
+    }
+
+
+def revoke_template_access_for_user(
+    owner_id,
+    template_id,
+    collaborator_id,
+):
+    try:
+        object_id = ObjectId(template_id)
+    except Exception as exc:
+        raise TemplateServiceError("Template was not found.", 404) from exc
+
+    result = get_templates_collection().update_one(
+        {"_id": object_id, "owner_id": owner_id},
+        {
+            "$pull": {"collaborators": {"user_id": collaborator_id}},
+            "$set": {"updated_at": utc_now()},
+        },
+    )
+
+    if not result.matched_count:
         raise TemplateServiceError("Template was not found.", 404)
