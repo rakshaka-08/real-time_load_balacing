@@ -15,6 +15,7 @@ import Analytics from "./pages/Analytics";
 import Reporting from "./pages/Reporting.jsx";
 import Replay from "./pages/Replay.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 function RequireAuth({ children }) {
   const { user, accessToken } = useAuth();
@@ -48,6 +49,7 @@ export default function App() {
         <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
         <Route path="/reports" element={<ProtectedRoute><Reporting /></ProtectedRoute>} />
         <Route path="/replay" element={<ProtectedRoute><Replay /></ProtectedRoute>} />
+        <Route path="*" element={<NotFound />} />
         <Route
           path="/tasks"
           element={
