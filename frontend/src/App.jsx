@@ -6,27 +6,19 @@ import {
 } from "react-router-dom";
 
 import { useAuth } from "./context/AuthContext.jsx";
+
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+
+import Analytics from "./pages/Analytics.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Login from "./pages/Login.jsx";
+import NotFound from "./pages/NotFound.jsx";
 import Register from "./pages/Register.jsx";
+import Replay from "./pages/Replay.jsx";
+import Reporting from "./pages/Reporting.jsx";
+import SystemStatus from "./pages/SystemStatus.jsx";
 import Tasks from "./pages/Tasks.jsx";
 import VirtualMachines from "./pages/VirtualMachines.jsx";
-import Analytics from "./pages/Analytics";
-import Reporting from "./pages/Reporting.jsx";
-import Replay from "./pages/Replay.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import NotFound from "./pages/NotFound.jsx";
-import SystemStatus from "./pages/SystemStatus.jsx";
-
-function RequireAuth({ children }) {
-  const { user, accessToken } = useAuth();
-
-  if (!user || !accessToken) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return children;
-}
 
 function HomeRedirect() {
   const { user, accessToken } = useAuth();
@@ -39,45 +31,83 @@ function HomeRedirect() {
   );
 }
 
+function ProtectedPage({ children }) {
+  return <ProtectedRoute>{children}</ProtectedRoute>;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeRedirect />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
-        <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
-        <Route path="/reports" element={<ProtectedRoute><Reporting /></ProtectedRoute>} />
-        <Route path="/replay" element={<ProtectedRoute><Replay /></ProtectedRoute>} />
-        <Route path="*" element={<NotFound />} />
+
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedPage>
+              <Dashboard />
+            </ProtectedPage>
+          }
+        />
+
         <Route
           path="/tasks"
           element={
-            <RequireAuth>
+            <ProtectedPage>
               <Tasks />
-            </RequireAuth>
+            </ProtectedPage>
           }
         />
 
         <Route
           path="/vms"
           element={
-            <RequireAuth>
+            <ProtectedPage>
               <VirtualMachines />
-            </RequireAuth>
+            </ProtectedPage>
           }
         />
-        <Route
-  path="/status"
-  element={
-    <ProtectedRoute>
-      <SystemStatus />
-    </ProtectedRoute>
-  }
-/>
 
-        <Route path="*" element={<HomeRedirect />} />
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedPage>
+              <Analytics />
+            </ProtectedPage>
+          }
+        />
+
+        <Route
+          path="/reports"
+          element={
+            <ProtectedPage>
+              <Reporting />
+            </ProtectedPage>
+          }
+        />
+
+        <Route
+          path="/replay"
+          element={
+            <ProtectedPage>
+              <Replay />
+            </ProtectedPage>
+          }
+        />
+
+        <Route
+          path="/status"
+          element={
+            <ProtectedPage>
+              <SystemStatus />
+            </ProtectedPage>
+          }
+        />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
