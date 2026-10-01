@@ -10,6 +10,7 @@ from ..algorithms.base_algorithm import (
     validate_number,
 )
 from .load_balancer import rebalance_queues
+from .metrics import calculate_metrics
 from .task_executor import TaskRuntime
 from .vm_scheduler import VMRuntime
 
@@ -22,22 +23,34 @@ class SimulationEngine:
         overload_thresholds,
         enable_redistribution=True,
     ):
-        if not isinstance(enable_redistribution, bool):
+        if not isinstance(
+            enable_redistribution,
+            bool,
+        ):
             raise ValueError(
                 "enable_redistribution must be a boolean."
             )
 
-        if not isinstance(problem, SchedulingProblem):
+        if not isinstance(
+            problem,
+            SchedulingProblem,
+        ):
             raise ValueError(
                 "problem must be a SchedulingProblem."
             )
 
-        if not isinstance(result, AlgorithmResult):
+        if not isinstance(
+            result,
+            AlgorithmResult,
+        ):
             raise ValueError(
                 "result must be an AlgorithmResult."
             )
 
-        if not isinstance(overload_thresholds, dict):
+        if not isinstance(
+            overload_thresholds,
+            dict,
+        ):
             raise ValueError(
                 "overload_thresholds must be a dictionary."
             )
@@ -74,7 +87,9 @@ class SimulationEngine:
         self.problem = problem
         self.result = result
         self.overload_thresholds = thresholds
-        self.enable_redistribution = enable_redistribution
+        self.enable_redistribution = (
+            enable_redistribution
+        )
 
         self._lock = RLock()
         self._status = "CREATED"
@@ -84,9 +99,14 @@ class SimulationEngine:
         self._pending_task_ids = deque()
         self._workload_open = False
 
+        self._scheduler_execution_seconds = (
+            result.execution_seconds
+        )
+
         assignment_map = {
             assignment.task_id: assignment.vm_id
-            for assignment in result.schedule.assignments
+            for assignment
+            in result.schedule.assignments
         }
 
         self._tasks = {
@@ -107,7 +127,8 @@ class SimulationEngine:
 
         self._dispatch_order = [
             assignment.task_id
-            for assignment in result.schedule.assignments
+            for assignment
+            in result.schedule.assignments
         ]
 
     def _process_current_time(self):
@@ -122,11 +143,13 @@ class SimulationEngine:
 
             if (
                 task.status == "WAITING"
-                and task.spec.arrival_time <= self._clock
+                and task.spec.arrival_time
+                <= self._clock
             ):
                 if task.vm_id is None:
                     raise RuntimeError(
-                        "A scheduled task has no VM assignment."
+                        "A scheduled task has no "
+                        "VM assignment."
                     )
 
                 task.status = "ASSIGNED"
@@ -174,14 +197,18 @@ class SimulationEngine:
             for task in self._tasks.values()
             if (
                 task.status == "WAITING"
-                and task.spec.arrival_time > self._clock
+                and task.spec.arrival_time
+                > self._clock
             )
         ]
 
         event_times.extend(
             task.expected_finish
             for task in self._tasks.values()
-            if task.status == "RUNNING"
+            if (
+                task.status == "RUNNING"
+                and task.expected_finish is not None
+            )
         )
 
         return (
@@ -226,7 +253,10 @@ class SimulationEngine:
             for task in new_tasks
         ]
 
-        if len(set(incoming_ids)) != len(incoming_ids):
+        if (
+            len(set(incoming_ids))
+            != len(incoming_ids)
+        ):
             raise ValueError(
                 "Injected task IDs must be unique."
             )
@@ -239,7 +269,8 @@ class SimulationEngine:
             }:
                 raise ValueError(
                     "Tasks can only be added to a "
-                    "created, running, or paused simulation."
+                    "created, running, or paused "
+                    "simulation."
                 )
 
             duplicate_ids = set(
@@ -271,8 +302,8 @@ class SimulationEngine:
             or limit <= 0
         ):
             raise ValueError(
-                "limit must be a positive "
-                "integer or None."
+                "limit must be a positive integer "
+                "or None."
             )
 
         with self._lock:
@@ -332,7 +363,10 @@ class SimulationEngine:
             return self.snapshot()
 
     def schedule_pending(self, result):
-        if not isinstance(result, AlgorithmResult):
+        if not isinstance(
+            result,
+            AlgorithmResult,
+        ):
             raise ValueError(
                 "result must be an AlgorithmResult."
             )
@@ -343,7 +377,8 @@ class SimulationEngine:
 
         if not scheduled_ids:
             raise ValueError(
-                "The scheduling result contains no tasks."
+                "The scheduling result contains "
+                "no tasks."
             )
 
         with self._lock:
@@ -364,13 +399,14 @@ class SimulationEngine:
             if (
                 len(set(scheduled_ids))
                 != len(scheduled_ids)
-                or not set(scheduled_ids).issubset(
-                    pending_ids
-                )
+                or not set(
+                    scheduled_ids
+                ).issubset(pending_ids)
             ):
                 raise ValueError(
-                    "The scheduling result must contain "
-                    "only unique pending task IDs."
+                    "The scheduling result must "
+                    "contain only unique pending "
+                    "task IDs."
                 )
 
             batch_tasks = [
@@ -380,7 +416,10 @@ class SimulationEngine:
 
             batch_problem = SchedulingProblem(
                 batch_tasks,
-                self.vm_specs(),
+                [
+                    vm.spec
+                    for vm in self._vms.values()
+                ],
             )
 
             verified_schedule = (
@@ -389,14 +428,22 @@ class SimulationEngine:
                 )
             )
 
-            if verified_schedule != result.schedule:
+            if (
+                verified_schedule
+                != result.schedule
+            ):
                 raise ValueError(
                     "Algorithm result does not match "
                     "the pending task batch."
                 )
 
+            self._scheduler_execution_seconds += (
+                result.execution_seconds
+            )
+
             assignment_map = {
-                assignment.task_id: assignment.vm_id
+                assignment.task_id:
+                    assignment.vm_id
                 for assignment
                 in result.schedule.assignments
             }
@@ -433,7 +480,8 @@ class SimulationEngine:
         with self._lock:
             if self._status != "CREATED":
                 raise ValueError(
-                    "Only a created simulation can start."
+                    "Only a created simulation "
+                    "can start."
                 )
 
             self._status = "RUNNING"
@@ -456,7 +504,8 @@ class SimulationEngine:
         with self._lock:
             if self._status == "CREATED":
                 raise ValueError(
-                    "Start the simulation before advancing."
+                    "Start the simulation before "
+                    "advancing."
                 )
 
             if self._status != "RUNNING":
@@ -491,8 +540,8 @@ class SimulationEngine:
 
                     if event_time < self._clock:
                         raise RuntimeError(
-                            "Simulation event would move "
-                            "time backward."
+                            "Simulation event would "
+                            "move time backward."
                         )
 
                     if event_time > target:
@@ -515,7 +564,8 @@ class SimulationEngine:
         with self._lock:
             if self._status != "RUNNING":
                 raise ValueError(
-                    "Only a running simulation can pause."
+                    "Only a running simulation "
+                    "can pause."
                 )
 
             self._status = "PAUSED"
@@ -526,7 +576,8 @@ class SimulationEngine:
         with self._lock:
             if self._status != "PAUSED":
                 raise ValueError(
-                    "Only a paused simulation can resume."
+                    "Only a paused simulation "
+                    "can resume."
                 )
 
             self._status = "RUNNING"
@@ -547,8 +598,8 @@ class SimulationEngine:
                 "PAUSED",
             }:
                 raise ValueError(
-                    "Only a created, running, or paused "
-                    "simulation can stop."
+                    "Only a created, running, or "
+                    "paused simulation can stop."
                 )
 
             self._status = "STOPPED"
@@ -570,7 +621,9 @@ class SimulationEngine:
             return SimulationEngine(
                 self.problem,
                 self.result,
-                dict(self.overload_thresholds),
+                dict(
+                    self.overload_thresholds
+                ),
                 enable_redistribution=(
                     self.enable_redistribution
                 ),
@@ -588,7 +641,10 @@ class SimulationEngine:
                 if task.status == "COMPLETED":
                     remaining_work = 0.0
 
-                elif task.started_at is not None:
+                elif (
+                    task.started_at is not None
+                    and task.vm_id is not None
+                ):
                     capacity = self._vms[
                         task.vm_id
                     ].spec.capacity_mips
@@ -605,7 +661,9 @@ class SimulationEngine:
 
                 task_records.append({
                     "id": task.spec.id,
-                    "work_mi": task.spec.work_mi,
+                    "work_mi": (
+                        task.spec.work_mi
+                    ),
                     "arrival_time": (
                         task.spec.arrival_time
                     ),
@@ -670,7 +728,7 @@ class SimulationEngine:
                 self._pending_task_ids
             )
 
-            return {
+            snapshot = {
                 "status": self._status,
                 "simulated_time": self._clock,
                 "algorithm": (
@@ -679,9 +737,14 @@ class SimulationEngine:
                 "algorithm_execution_seconds": (
                     self.result.execution_seconds
                 ),
+                "scheduler_execution_seconds": (
+                    self._scheduler_execution_seconds
+                ),
                 "seed": self.result.seed,
-                "initial_overload_thresholds": dict(
-                    self.overload_thresholds
+                "initial_overload_thresholds": (
+                    dict(
+                        self.overload_thresholds
+                    )
                 ),
                 "redistribution_enabled": (
                     self.enable_redistribution
@@ -724,3 +787,9 @@ class SimulationEngine:
                     self._tasks
                 ),
             }
+
+            snapshot["metrics"] = (
+                calculate_metrics(snapshot)
+            )
+
+            return snapshot
