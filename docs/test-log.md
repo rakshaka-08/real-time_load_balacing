@@ -143,3 +143,16 @@
 - Existing authentication and API contracts remain unchanged.
 - Backend tests passed.
 - Frontend production build passed.
+
+## Module 24 — Continuous real-time task generator
+
+- Added deterministic task generation based on simulated time.
+- Added configurable arrival rate and task-size range.
+- Added unique generated task IDs.
+- Added seeded reproducibility.
+- Added incremental generation support.
+- Added backward-time protection.
+- Added maximum-task safety limits.
+- Existing algorithms and authentication remain unchanged.
+- Task generator unit tests passed.
+- Complete backend test suite passed.
