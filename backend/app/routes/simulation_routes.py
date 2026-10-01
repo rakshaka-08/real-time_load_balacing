@@ -12,6 +12,9 @@ from ..services.simulation_service import (
     get_simulation_for_user,
     list_simulations_for_user,
 )
+from ..services.benchmark_service import (
+    benchmark_algorithms_for_user,
+)
 
 simulation_bp = Blueprint(
     "simulations",
@@ -76,6 +79,14 @@ def list_runs(owner_id):
     return jsonify(result), 200
 
 
+@simulation_bp.post("/benchmark")
+@authenticated_simulation_route
+def benchmark(owner_id):
+    result = benchmark_algorithms_for_user(
+        owner_id,
+        read_json_body(),
+    )
+    return jsonify(result), 200
 @simulation_bp.get("/<simulation_id>")
 @authenticated_simulation_route
 def get_run(owner_id, simulation_id):
