@@ -133,3 +133,13 @@
 - Verified successful login and registration.
 - Verified invalid login error presentation.
 - Frontend production build passed.
+
+## Module 23 — Baseline stability and test discovery
+
+- Corrected Analytics to use the access token exposed by AuthContext.
+- Consolidated protected route handling.
+- Removed duplicate user model definitions.
+- Renamed the Hybrid GA-HBA test module for unittest discovery.
+- Existing authentication and API contracts remain unchanged.
+- Backend tests passed.
+- Frontend production build passed.
