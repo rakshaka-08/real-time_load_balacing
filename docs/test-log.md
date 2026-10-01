@@ -177,3 +177,31 @@ Date: 2026-10-01
 ```powershell
 python -m unittest discover -s tests -p "test_micro_batcher.py" -v
 python -m unittest discover -s tests -p "test_*.py"
+
+## Modules 27 and 28 — Metrics and algorithm benchmarking
+
+Date: 2026-10-01
+
+### Module 27 validation
+
+- Centralized metrics use actual simulation snapshots.
+- System utilization uses VM busy time and available VM time.
+- Response times use actual arrival and completion times.
+- Makespan uses the final task completion time.
+- Load imbalance uses normalized VM utilization deviation.
+- Backlog includes pending, waiting, and assigned tasks.
+- Scheduler execution time accumulates across micro-batches.
+
+### Module 28 validation
+
+- GA, HBA, GA-HBA, LPT, and SPT receive identical workloads.
+- All algorithms receive the same seed and VM configuration.
+- Benchmarks execute through the existing SimulationEngine.
+- Benchmark results contain actual Module 27 metrics.
+- Benchmark API remains protected by JWT and user ownership checks.
+
+### Automated tests
+
+- Module 27 focused tests: 7 passed.
+- Module 28 focused tests: 7 passed.
+- Complete backend suite: 137 passed.
