@@ -156,3 +156,24 @@
 - Existing algorithms and authentication remain unchanged.
 - Task generator unit tests passed.
 - Complete backend test suite passed.
+
+## Modules 25 and 26 — Runtime task queue and micro-batching
+
+Date: 2026-10-01
+
+### Validation
+
+- Micro-batcher tests: 8 passed
+- Complete backend suite: 123 passed
+- Runtime tasks remain pending until scheduled.
+- Tasks can be injected while a simulation is running.
+- Open workloads do not complete prematurely.
+- Batch-size and interval triggers schedule pending tasks.
+- Seeded task generation remains deterministic.
+- Existing scheduling algorithms are reused without changing authentication or ownership controls.
+
+### Commands
+
+```powershell
+python -m unittest discover -s tests -p "test_micro_batcher.py" -v
+python -m unittest discover -s tests -p "test_*.py"
