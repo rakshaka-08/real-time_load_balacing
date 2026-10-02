@@ -205,3 +205,26 @@ Date: 2026-10-01
 - Module 27 focused tests: 7 passed.
 - Module 28 focused tests: 7 passed.
 - Complete backend suite: 137 passed.
+
+## Modules 29 and 30 — Live metrics delivery and Tasks UI
+
+Date: 2026-10-02
+
+### Module 29
+
+- Existing `simulation_state` Socket.IO event preserved.
+- Real-time metrics summary added to current simulation payloads.
+- JWT authentication and ownership checks preserved.
+- Private delivery and revision ordering preserved.
+- Legacy simulation payloads remain compatible.
+- Focused Socket.IO metrics tests: 6 passed.
+- Complete backend suite: 143 passed.
+
+### Module 30
+
+- Task CRUD and deterministic generation preserved.
+- Responsive Tasks page layout added.
+- Summary cards use actual loaded task data.
+- Loading, empty, success, and error states styled.
+- Desktop and mobile layouts verified.
+- Frontend production build passed.
