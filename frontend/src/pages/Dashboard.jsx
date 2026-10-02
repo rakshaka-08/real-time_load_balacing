@@ -10,6 +10,7 @@ import {
 
 import RealtimeOverview from "../components/RealtimeOverview.jsx";
 import TemplatePanel from "../components/TemplatePanel.jsx";
+import VirtualDataCenter from "../components/VirtualDataCenter.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import useSimulationSocket from "../hooks/useSimulationSocket.js";
 import {
@@ -1130,6 +1131,10 @@ function RunDetail({
           )}
 
           <RealtimeOverview
+            state={state}
+          />
+
+          <VirtualDataCenter
             state={state}
           />
 
