@@ -228,3 +228,28 @@ Date: 2026-10-02
 - Loading, empty, success, and error states styled.
 - Desktop and mobile layouts verified.
 - Frontend production build passed.
+
+## Modules 31 and 32 — VM interface and live dashboard
+
+Date: 2026-10-02
+
+### Module 31
+
+- VM creation, editing, deletion, refresh, and pagination preserved.
+- Responsive VM configuration cards added.
+- Capacity and overload summaries use actual VM records.
+- Loading, empty, success, and error states added.
+
+### Module 32
+
+- Existing Socket.IO simulation updates preserved.
+- Live task-flow visualization added.
+- VM utilization uses actual busy and simulated time.
+- System utilization, backlog, and load imbalance use backend metrics.
+- Redistribution activity displays only recorded migrations.
+- Existing simulation controls and REST fallback preserved.
+
+### Validation
+
+- Frontend production build passed.
+- Vite transformed 144 modules successfully.
