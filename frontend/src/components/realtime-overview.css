@@ -1,0 +1,230 @@
+.realtime-overview {
+    display: grid;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  
+  .realtime-summary {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(120px, 1fr));
+    gap: .75rem;
+  }
+  
+  .realtime-summary article,
+  .realtime-card {
+    border: 1px solid #2c3c55;
+    border-radius: .9rem;
+    background: #18243a;
+  }
+  
+  .realtime-summary article {
+    min-height: 115px;
+    padding: 1rem;
+  }
+  
+  .realtime-summary span {
+    display: block;
+    color: #a4b4c9;
+    font-size: .76rem;
+    font-weight: 700;
+  }
+  
+  .realtime-summary strong {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1.55rem;
+  }
+  
+  .realtime-summary small {
+    color: #a4b4c9;
+    font-size: .78rem;
+    font-weight: 500;
+  }
+  
+  .realtime-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, .8fr) minmax(380px, 1.2fr);
+    gap: 1rem;
+  }
+  
+  .realtime-card {
+    padding: 1.2rem;
+  }
+  
+  .realtime-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  .realtime-heading p {
+    margin: 0 0 .3rem;
+    color: #6ee7c0;
+    font-size: .67rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  
+  .realtime-heading h3 {
+    margin: 0;
+  }
+  
+  .realtime-heading > span {
+    color: #a4b4c9;
+    font-size: .78rem;
+  }
+  
+  .task-flow,
+  .vm-utilization-list {
+    display: grid;
+    gap: .8rem;
+  }
+  
+  .task-flow-stage > div:first-child,
+  .vm-utilization-list article > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .task-flow-stage span {
+    color: #a4b4c9;
+  }
+  
+  .task-flow-track,
+  .vm-live-track {
+    overflow: hidden;
+    height: .5rem;
+    margin-top: .4rem;
+    border-radius: 999px;
+    background: #293650;
+  }
+  
+  .task-flow-track span,
+  .vm-live-track span {
+    display: block;
+    min-width: 2px;
+    height: 100%;
+    border-radius: inherit;
+    background: #6ee7c0;
+    transition: width .35s ease;
+  }
+  
+  .task-flow-stage.waiting .task-flow-track span {
+    background: #f2bd63;
+  }
+  
+  .task-flow-stage.failed .task-flow-track span {
+    background: #ff8f96;
+  }
+  
+  .task-flow-stage.completed .task-flow-track span {
+    background: #8cb8ff;
+  }
+  
+  .vm-utilization-list article {
+    padding-bottom: .8rem;
+    border-bottom: 1px solid #2c3c55;
+  }
+  
+  .vm-utilization-list article:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  
+  .vm-utilization-list small {
+    display: block;
+    margin-top: .35rem;
+    color: #a4b4c9;
+  }
+  
+  .vm-live-status {
+    padding: .2rem .45rem;
+    border-radius: 999px;
+    color: #a4b4c9;
+    background: #26354b;
+    font-size: .62rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+  
+  .vm-live-status.running,
+  .vm-live-status.overloaded {
+    color: #6ee7c0;
+    background: #173d35;
+  }
+  
+  .vm-live-status.overloaded {
+    color: #f2bd63;
+    background: #4a3820;
+  }
+  
+  .migration-list {
+    display: grid;
+    gap: .65rem;
+  }
+  
+  .migration-list article {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .85rem;
+    border: 1px solid #2c3c55;
+    border-radius: .75rem;
+    background: #111d30;
+  }
+  
+  .migration-list article > div {
+    display: grid;
+    gap: .25rem;
+  }
+  
+  .migration-list article > div:last-child {
+    text-align: right;
+  }
+  
+  .migration-list span,
+  .migration-list small {
+    color: #a4b4c9;
+  }
+  
+  .migration-list b {
+    margin: 0 .55rem;
+    color: #6ee7c0;
+  }
+  
+  .migration-empty {
+    padding: 2rem;
+    border: 1px dashed #35465e;
+    border-radius: .75rem;
+    color: #a4b4c9;
+    text-align: center;
+  }
+  
+  @media (max-width: 1250px) {
+    .realtime-summary {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (max-width: 850px) {
+    .realtime-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .realtime-summary {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .migration-list article {
+      flex-direction: column;
+    }
+  
+    .migration-list article > div:last-child {
+      text-align: left;
+    }
+  }
