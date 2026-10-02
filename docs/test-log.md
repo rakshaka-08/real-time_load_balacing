@@ -277,3 +277,15 @@ Date: 2026-10-02
 - Complete backend suite: 143 passed.
 - Frontend production build passed.
 - Vite transformed 149 modules successfully.
+
+## Module 35 — Final integration and validation
+
+Date: 2026-10-02
+
+- Project setup, execution, testing, architecture, and collaboration guidance consolidated.
+- Safe backend and frontend environment templates added.
+- Deployment requirements and release checks documented.
+- Generated frontend builds and accidental nested copies excluded from future commits.
+- Complete backend suite: 143 passed.
+- Frontend production build passed.
+- Vite transformed 149 modules successfully.
