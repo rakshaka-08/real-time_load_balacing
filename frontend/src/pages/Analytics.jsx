@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext.jsx";
 import { listSimulations } from "../services/simulationService.js";
-
+import AlgorithmBenchmark from "../components/AlgorithmBenchmark.jsx";
 import "./analytics.css";
 
 const METRICS = [
@@ -231,7 +231,6 @@ export default function Analytics() {
               {user?.email || "your account"}.
             </p>
           </div>
-
           <button
             type="button"
             className="refresh-button"
@@ -241,6 +240,8 @@ export default function Analytics() {
             {loading ? "Loading…" : "Refresh runs"}
           </button>
         </div>
+
+        <AlgorithmBenchmark />
 
         {loading && (
           <p className="analytics-message" role="status">

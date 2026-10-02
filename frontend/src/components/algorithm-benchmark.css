@@ -1,0 +1,245 @@
+.benchmark-panel {
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    border: 1px solid #2b3955;
+    border-radius: 1rem;
+    background: #121a32;
+  }
+  
+  .benchmark-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .benchmark-heading p {
+    margin: 0;
+    color: #82eabb;
+    font-size: .7rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  
+  .benchmark-heading h2 {
+    margin: .35rem 0;
+  }
+  
+  .benchmark-heading span,
+  .benchmark-heading > strong {
+    color: #a9b9d6;
+  }
+  
+  .benchmark-input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .benchmark-selection {
+    padding: 1rem;
+    border: 1px solid #2b3955;
+    border-radius: .8rem;
+    background: #0c1328;
+  }
+  
+  .benchmark-selection > div:first-child {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .benchmark-selection h3 {
+    margin: 0;
+  }
+  
+  .benchmark-selection > div > span {
+    color: #82eabb;
+  }
+  
+  .benchmark-options {
+    overflow-y: auto;
+    max-height: 240px;
+    margin-top: 1rem;
+  }
+  
+  .benchmark-options label {
+    display: flex;
+    gap: .7rem;
+    padding: .7rem 0;
+    border-bottom: 1px solid #273650;
+  }
+  
+  .benchmark-options input {
+    width: 1rem;
+    accent-color: #82eabb;
+  }
+  
+  .benchmark-options label span {
+    display: grid;
+  }
+  
+  .benchmark-options small {
+    color: #9eb8df;
+  }
+  
+  .benchmark-controls {
+    display: flex;
+    align-items: end;
+    gap: 1rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+  }
+  
+  .benchmark-controls label:not(.benchmark-switch) {
+    display: grid;
+    gap: .35rem;
+  }
+  
+  .benchmark-controls input[type="number"] {
+    padding: .7rem;
+    border: 1px solid #3b4d70;
+    border-radius: .6rem;
+    color: #edf3ff;
+    background: #0c1328;
+  }
+  
+  .benchmark-switch {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 44px;
+  }
+  
+  .benchmark-switch input {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: #82eabb;
+  }
+  
+  .benchmark-controls button {
+    min-height: 44px;
+    padding: .7rem 1rem;
+    border: 0;
+    border-radius: .65rem;
+    color: #082117;
+    background: #82eabb;
+    font-weight: 900;
+    cursor: pointer;
+  }
+  
+  .benchmark-controls button:disabled {
+    cursor: not-allowed;
+    opacity: .5;
+  }
+  
+  .benchmark-error {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #ff9e9e66;
+    border-radius: .7rem;
+    color: #ffb8b8;
+    background: #4c252d;
+  }
+  
+  .benchmark-charts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .benchmark-chart {
+    padding: 1.1rem;
+    border: 1px solid #2b3955;
+    border-radius: .8rem;
+    background: #0c1328;
+  }
+  
+  .benchmark-chart h3 {
+    margin: 0;
+  }
+  
+  .benchmark-chart small {
+    color: #9eb8df;
+  }
+  
+  .benchmark-bars {
+    display: grid;
+    gap: .75rem;
+    margin-top: 1.2rem;
+  }
+  
+  .benchmark-bar {
+    display: grid;
+    grid-template-columns: 70px 1fr 100px;
+    align-items: center;
+    gap: .7rem;
+    font-size: .78rem;
+  }
+  
+  .benchmark-bar > div {
+    overflow: hidden;
+    height: .55rem;
+    border-radius: 999px;
+    background: #25344f;
+  }
+  
+  .benchmark-bar i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #82eabb;
+  }
+  
+  .benchmark-bar strong {
+    text-align: right;
+  }
+  
+  .benchmark-table-scroll {
+    overflow-x: auto;
+    margin-top: 1rem;
+  }
+  
+  .benchmark-table-scroll table {
+    width: 100%;
+    min-width: 1100px;
+    border-collapse: collapse;
+  }
+  
+  .benchmark-table-scroll th,
+  .benchmark-table-scroll td {
+    padding: .85rem;
+    border-bottom: 1px solid #2b3955;
+    text-align: right;
+  }
+  
+  .benchmark-table-scroll th:first-child,
+  .benchmark-table-scroll td:first-child {
+    position: sticky;
+    left: 0;
+    text-align: left;
+    background: #121a32;
+  }
+  
+  .benchmark-table-scroll thead th {
+    color: #9eb8df;
+    font-size: .7rem;
+  }
+  
+  .benchmark-note {
+    color: #9eb8df;
+    font-size: .82rem;
+  }
+  
+  @media (max-width: 800px) {
+    .benchmark-heading,
+    .benchmark-input-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+  
+    .benchmark-charts {
+      grid-template-columns: 1fr;
+    }
+  }
