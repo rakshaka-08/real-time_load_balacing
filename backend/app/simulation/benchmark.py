@@ -7,7 +7,7 @@ from .simulation_engine import SimulationEngine
 BENCHMARK_ALGORITHMS = (
     "GA",
     "HBA",
-    "GA-HBA",
+    "GA_HBA",
     "LPT",
     "SPT",
 )
