@@ -1,0 +1,183 @@
+.datacenter-panel {
+  margin: 1.75rem 0;
+  padding: 1.5rem;
+  border: 1px solid #2b3955;
+  border-radius: 1rem;
+  background: #121a32;
+}
+
+.datacenter-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.datacenter-heading p {
+  margin: 0;
+  color: #82eabb;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.datacenter-heading h3 {
+  margin: 0.35rem 0;
+  font-size: 1.45rem;
+}
+
+.datacenter-heading span,
+.datacenter-heading > strong {
+  color: #9eb8df;
+}
+
+.datacenter-heading > strong {
+  white-space: nowrap;
+}
+
+.rack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.rack {
+  overflow: hidden;
+  border: 1px solid #334563;
+  border-radius: 0.85rem;
+  background: #0c1328;
+}
+
+.rack > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #2b3955;
+  background: #16213b;
+}
+
+.rack > header span,
+.rack > header b {
+  color: #9eb8df;
+  font-size: 0.75rem;
+}
+
+.rack > header h4 {
+  margin: 0.2rem 0 0;
+}
+
+.rack-machines {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.85rem;
+}
+
+.rack-machine {
+  padding: 0.9rem;
+  border: 1px solid #2b3955;
+  border-radius: 0.7rem;
+  background: #121a32;
+}
+
+.rack-machine > div:first-child {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.rack-machine i {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: #90a0bc;
+  box-shadow: 0 0 0 4px #90a0bc1f;
+}
+
+.rack-machine.running i {
+  background: #82eabb;
+  box-shadow: 0 0 0 4px #82eabb24;
+}
+
+.rack-machine.completed i {
+  background: #8fb5ff;
+  box-shadow: 0 0 0 4px #8fb5ff24;
+}
+
+.rack-machine.failed i,
+.rack-machine.stopped i {
+  background: #ff9e9e;
+  box-shadow: 0 0 0 4px #ff9e9e24;
+}
+
+.rack-machine > div:first-child span {
+  color: #9eb8df;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.rack-machine > p {
+  margin: 0.65rem 0;
+  color: #82eabb;
+  font-weight: 800;
+}
+
+.rack-machine dl {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.4rem 1rem;
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.rack-machine dt {
+  color: #9eb8df;
+}
+
+.rack-machine dd {
+  margin: 0;
+  text-align: right;
+}
+
+.machine-load {
+  overflow: hidden;
+  height: 0.4rem;
+  margin-top: 0.8rem;
+  border-radius: 999px;
+  background: #25344f;
+}
+
+.machine-load span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #66cda0, #8fb5ff);
+}
+
+.datacenter-empty {
+  padding: 2rem;
+  border: 1px dashed #3b4d70;
+  border-radius: 0.8rem;
+  color: #9eb8df;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .rack-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .datacenter-heading {
+    display: grid;
+  }
+
+  .datacenter-heading > strong {
+    white-space: normal;
+  }
+}
